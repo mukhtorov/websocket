@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="x-frame-options" value="DENY" />
+  </head>
+  <body>
+    <div id="msg"></div>
+    <button id="btn">chat with me?</button>
+    <hr />
+    <input type="text" id="value" /> <button id="send">send</button>
+  </body>
+  <script>
+    let socket = new WebSocket("ws://localhost:5500/index.html");
+
+    socket.onopen = (e) => {
+      console.log("connected", e);
+    };
+    socket.onmessage = ({ data }) => {
+      console.log(data);
+      let div = document.createElement("div");
+      div.innerHTML = data;
+
+      msg.append(div);
+    };
+    // };
+
+    send.onclick = () => {
+      socket.send(value.value);
+    };
+  </script>
+</html>
